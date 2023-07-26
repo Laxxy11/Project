@@ -6,7 +6,7 @@ from fastapi.encoders import jsonable_encoder
 import schemas ,models
 from auth import verify_password,get_password_hash,create_access_token,jwt,JWTError,setting
 from sqlalchemy.orm import Session
-from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer,HTTPBearer
 from database import sessionlocal
 from datetime import datetime,timedelta
 

@@ -5,3 +5,10 @@ from sqlalchemy import create_engine
 engine=create_engine('postgresql://postgres:inferno@localhost/todo')
 
 sessionlocal=sessionmaker(autocommit=False,autoflush=False,bind=engine)
+
+def get_db():
+    db=sessionlocal()
+    try:
+        yield db
+    finally:
+        db.close()

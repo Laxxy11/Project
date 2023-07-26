@@ -1,7 +1,8 @@
 import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
-from pydantic import BaseModel
 
 class Todo(BaseModel):
     name:str
@@ -14,16 +15,12 @@ class Todo(BaseModel):
 class CreateTodo(BaseModel):
     name:str
     description:str
-    
-class TodoinDB(BaseModel):
-    name:str
-    description:str
-    user_id: int
-    created_time: datetime.datetime
+
+
 
 class User(BaseModel):
     name:str
-    email:str
+    email:EmailStr
     todos:list[Todo]=[]
 
     class Config:
@@ -31,10 +28,10 @@ class User(BaseModel):
 
 class UserCreate(BaseModel):
     name:str
-    email:str
+    email:EmailStr
     password:str
 class Userlogin(BaseModel):
-    email:str
+    email:EmailStr
     password:str
 
 class Token(BaseModel):
@@ -44,3 +41,10 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     name: str | None = None
+
+#for loading a settings or config class from environment variables or secrets files.
+class Setting(BaseSettings):
+    SECRET_KEY: str
+    ALGORITHM:str
+    ACCESS_TOKEN_EXPIRE_MINUTES:int
+    model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
